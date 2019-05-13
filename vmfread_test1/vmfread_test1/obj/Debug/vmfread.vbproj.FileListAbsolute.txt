@@ -14,3 +14,4 @@ C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\o
 C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.exe
 C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.xml
 C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.pdb
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.vbprojAssemblyReference.cache

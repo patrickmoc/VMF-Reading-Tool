@@ -119,6 +119,8 @@ Class MainWindow
         items = System.Enum.GetValues(GetType(TpTypes))
 
         'Load TP types into combobox
+        cmbTpType.Items.Clear()
+
         For Each item In items
             cmbTpType.Items.Add(item)
         Next
@@ -126,15 +128,21 @@ Class MainWindow
         items = System.Enum.GetValues(GetType(mapTypes))
 
         'Load map types into combobox
+        cmbMapTypes.Items.Clear()
+
         For Each item In items
             cmbMapTypes.Items.Add(item)
         Next
+
         cmbMapTypes.SelectedIndex = 0
 
         'Load Tiers into combobox
+        cmbTier.Items.Clear()
+
         For I As Integer = 1 To 6
             cmbTier.Items.Add(I)
         Next
+
         cmbTier.SelectedIndex = 0
 
 
@@ -207,20 +215,26 @@ Class MainWindow
     End Sub
 
     Private Sub BtnApply_Click(sender As Object, e As RoutedEventArgs) Handles btnApply.Click
-        If (Integer.TryParse(txtStNum.Text, 0)) Then
+        If (Integer.TryParse(txtStNum.Text, 0) And tpSize > 0) Then
             teleportLocations(lstTpList.SelectedIndex).stOrBonusNum = Integer.Parse(txtStNum.Text)
             teleportLocations(lstTpList.SelectedIndex).tpType = cmbTpType.SelectedIndex
             MessageBox.Show("Changed successfuly.")
         Else
-            MessageBox.Show("Please enter a valid stage or bonus value!")
+            If (tpSize <= 0) Then
+                MessageBox.Show("Could not find any destinations!")
+            Else
+                MessageBox.Show("Please enter a valid stage or bonus value!")
+            End If
         End If
     End Sub
 
     Private Sub BtnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
         Dim i As Integer = lstTpList.SelectedIndex
-        Dim tp As TpDest = teleportLocations(i)
-        txtStNum.Text = tp.stOrBonusNum
-        cmbTpType.SelectedIndex = tp.tpType
+        If (i >= 0) Then
+            Dim tp As TpDest = teleportLocations(i)
+            txtStNum.Text = tp.stOrBonusNum
+            cmbTpType.SelectedIndex = tp.tpType
+        End If
     End Sub
 
     Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
