@@ -1,0 +1,16 @@
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\bin\Debug\vmfread.exe.config
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\bin\Debug\vmfread.exe
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\bin\Debug\vmfread.pdb
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\bin\Debug\vmfread.xml
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\MainWindow.g.vb
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\Application.g.vb
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread_MarkupCompile.cache
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread_MarkupCompile.lref
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\MainWindow.baml
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.g.resources
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.Resources.resources
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.vbproj.GenerateResource.cache
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.vbproj.CoreCompileInputs.cache
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.exe
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.xml
+C:\Users\Patrick\Documents\GitHub\VMF-Reading-Tool\vmfread_test1\vmfread_test1\obj\Debug\vmfread.pdb
