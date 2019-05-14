@@ -1,5 +1,6 @@
 ﻿'Represents an info_teleport_destination, storing it's position, angle and name
 Public Class TpDest
+    Implements IComparable(Of TpDest)
 
 #Region "Properties"
     'angles of the teleport destination
@@ -100,6 +101,18 @@ Public Class TpDest
                                   "Origin:" & vbTab & origin & vbNewLine &
                                   "Angles:" & vbTab & angles & vbNewLine
         Return strReturn
+    End Function
+#End Region
+
+#Region "IComparable"
+    Public Function CompareTo(other As TpDest) As Integer Implements IComparable(Of TpDest).CompareTo
+        If (tpType <> other.tpType) Then
+            Return tpType - other.tpType
+        ElseIf (stOrBonusNum <> other.stOrBonusNum) Then
+            Return stOrBonusNum - other.stOrBonusNum
+        Else
+            Return name.CompareTo(other.name)
+        End If
     End Function
 #End Region
 End Class

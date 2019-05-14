@@ -5,15 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:vmfread"
         mc:Ignorable="d"
-        Title="VMF Reader" Height="715" Width="754.056">
-    <Grid>
-        <RichTextBox HorizontalAlignment="Center" Height="157" Margin="42,513,42,0" VerticalAlignment="Top"  IsReadOnly="True" Name="txtVMFText" Block.LineHeight="6" >
-            <FlowDocument>
-                <Paragraph x:Name="vmfParagraph" Padding="0">
-                    <Run x:Name="vmfRun" BaselineAlignment="Center" Text=" Teleport Info Window:"/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        Title="VMF Reader" Height="552.773" Width="754.056">
+    <Grid Height="512" VerticalAlignment="Top">
         <Button Content="Choose File" HorizontalAlignment="Left" Height="22" Margin="10,17,0,0" VerticalAlignment="Top" Width="130" Name="btnChooseFile"/>
         <TextBox HorizontalAlignment="Left" Height="22" Margin="145,17,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  IsReadOnly="True" Name="txtFilePath" Width="559"/>
 
@@ -50,7 +43,7 @@
             <CheckBox x:Name="chkBakedTriggers" Content="Baked Triggers" Grid.Column="1" HorizontalAlignment="Left" Height="21" Margin="34,397,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False"/>
             <TextBox x:Name="txtMapper" Grid.Column="1" HorizontalAlignment="Left" Height="21" Margin="90,347,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" IsEnabled="False"/>
             <TextBlock x:Name="txtMapperLabel" Grid.Column="1" HorizontalAlignment="Left" Height="21" Margin="34,347,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" FontFamily="Verdana" FontSize="14" Text="Author:"/>
-            <Button x:Name="btnMakeScript" Content="Make Script" Grid.Column="1" HorizontalAlignment="Left" Margin="240,397,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click" IsEnabled="False"/>
+            <Button x:Name="btnMakeScript" Content="Make Script" Grid.Column="1" HorizontalAlignment="Left" Margin="240,397,0,0" VerticalAlignment="Top" Width="100" IsEnabled="False"/>
         </Grid>
     </Grid>
 </Window>

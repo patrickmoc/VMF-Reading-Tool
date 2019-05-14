@@ -1,0 +1,19 @@
+sm_insertmap 4 4 0 "Sam" 6 1;
+//tele_s1
+setpos -15039 12288 14784; setang 0 0 0;
+sm_setspawn 1;
+//tele_s2
+setpos -1024 -1832 1632; setang 0 90 0;
+sm_setspawn 2;
+//tele_s3
+setpos -12063 9568 1152; setang 0 0 0;
+sm_setspawn 3;
+//tele_s4
+setpos -6911 -10720 5776; setang 0 0 0;
+sm_setspawn 4;
+//tele_b1
+setpos 5952 1728 -1792; setang 0 90 0;
+sm_setbspawn 1;
+//tele_bZombie
+setpos 5952 12736 14848; setang 0 0 0;
+sm_setbspawn 2;

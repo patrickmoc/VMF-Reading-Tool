@@ -12,7 +12,7 @@ Class MainWindow
     Private tpSize As Integer
 #End Region
 
-#Region "Load From File"
+#Region "File Load / Save"
 
     'Load vmf from file browser
     Private Sub BtnChooseFile_Click(sender As Object, e As RoutedEventArgs) Handles btnChooseFile.Click
@@ -26,7 +26,7 @@ Class MainWindow
         fileDialog = New OpenFileDialog With {
             .CheckFileExists = True,
             .Title = "Select a VMF",
-            .Filter = "Valve Map Format|*.vmf"
+            .Filter = "Valve Map Format (*.vmf)|*.vmf|All Files (*.*)|*.*"
         }
         'TODO: Add handling to ensure file exists
         If (Not fileDialog.ShowDialog()) Then
@@ -37,11 +37,7 @@ Class MainWindow
             'A new file has been opened so the array size must be reset
             tpSize = 0
 
-            'Clear info
-            txtVMFText.Document.Blocks.Clear()
-            txtVMFText.AppendText(vbNewLine)
-
-            'Display file choses
+            'Display file choice
             txtFilePath.Text = fileDialog.FileName
             sReader = File.OpenText(fileDialog.FileName)
             Dim strTemp As String
@@ -49,6 +45,8 @@ Class MainWindow
             strTemp = sReader.ReadLine
             'Parse until EOF
             While (Not sReader.EndOfStream)
+
+                '****TODO**** Use proper parser instead of regex / string methods 
 
                 'Only search for keywords if the object is a teleport destination
                 If (strTemp.Contains("""classname"" ""info_teleport_destination""")) Then
@@ -90,6 +88,18 @@ Class MainWindow
 
         InitControls()
 
+    End Sub
+
+    Private Sub SaveScript(Script As String)
+        If (Script IsNot Nothing) Then
+            Dim save As SaveFileDialog = New SaveFileDialog With {
+            .Title = "Save File",
+            .Filter = "Config File (*.cfg)|*.cfg|Text File (*.txt)|*.txt|All Files (*.*)|*.*"
+            }
+            If (save.ShowDialog()) Then
+                System.IO.File.WriteAllText(save.FileName, Script)
+            End If
+        End If
     End Sub
 #End Region
 
@@ -149,14 +159,63 @@ Class MainWindow
         'Init listview and textbox -------
         lstTpList.IsEnabled = "True"
         For index As Integer = 0 To tpSize - 1
-            txtVMFText.AppendText("----------------------------------------------------------------------------------" & vbNewLine)
-            txtVMFText.AppendText(teleportLocations(index).ToString)
             lstTpList.Items.Add(teleportLocations(index).name)
         Next
         'Needed to refresh the data
         lstTpList.SelectedIndex = 0
 
     End Sub
+    'Generates the string for the first line of the output script
+    '<Map Insertion Guide>
+    'Arg 1 - Tier(1 - 6)
+    'Arg 2 - Checkpoints
+    'Arg 3 - Map Type ( 0 - Staged, 1 - Linear )
+    'Arg 4 - Map Author ( In quotes )
+    'Arg 5 - Bonuses
+    'Arg 6 - Baked Triggers ( 0 - Disabled, 1 - Enabled )
+
+    'Example sm_insertmap 4 4 1 "Author" 2 1
+    Private Function InsertMap() As String
+        Dim ReturnString As String = "sm_insertmap "
+        If (cmbTier.SelectedIndex >= 0) Then
+            ReturnString &= (cmbTier.SelectedIndex + 1) & " "
+        Else
+            Return "//Error: Missing Tier in map info!" & vbNewLine
+        End If
+
+        If (txtStCount.Text <> "") Then
+            ReturnString &= txtStCount.Text & " "
+        Else
+            Return "//Error: Missing stage count in map info!" & vbNewLine
+        End If
+
+        If (cmbMapTypes.SelectedIndex >= 0) Then
+            ReturnString &= cmbMapTypes.SelectedIndex & " "
+        Else
+            Return "//Error: Missing map type in map info!" & vbNewLine
+        End If
+
+        If (txtMapper.Text <> "") Then
+            ReturnString &= """" & txtMapper.Text & """" & " "
+        Else
+            Return "//Error: Missing mapper name in map info!" & vbNewLine
+        End If
+
+        If (txtBCount.Text <> "") Then
+            ReturnString &= txtBCount.Text & " "
+        Else
+            Return "//Error: Missing bonus count in map info!" & vbNewLine
+        End If
+
+        If (chkBakedTriggers.IsChecked) Then
+            ReturnString &= 1 & ";" & vbNewLine
+        Else
+            ReturnString &= 0 & ";" & vbNewLine
+        End If
+
+        Return ReturnString
+
+    End Function
 
     'Accepts a line from the parser and a TpDest object to store info in
     'TODO Make a generalized regex instead of this garbage
@@ -214,6 +273,7 @@ Class MainWindow
 
     End Sub
 
+    'Applies the current teleport settings to the selected destination
     Private Sub BtnApply_Click(sender As Object, e As RoutedEventArgs) Handles btnApply.Click
         If (Integer.TryParse(txtStNum.Text, 0) And tpSize > 0) Then
             teleportLocations(lstTpList.SelectedIndex).stOrBonusNum = Integer.Parse(txtStNum.Text)
@@ -228,6 +288,7 @@ Class MainWindow
         End If
     End Sub
 
+    'resets the selected teleport destination settings to what they were before
     Private Sub BtnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
         Dim i As Integer = lstTpList.SelectedIndex
         If (i >= 0) Then
@@ -237,7 +298,43 @@ Class MainWindow
         End If
     End Sub
 
-    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+    'Generates the script to be used
+    Private Sub BtnMakeScript_Click(sender As Object, e As RoutedEventArgs) Handles btnMakeScript.Click
+        'List of all destinations that aren't unused
+        Dim TempDest As List(Of TpDest) = New List(Of TpDest)
+        'String containing the formatted script
+        Dim printString As String = ""
+        Dim insertmapFailed = False
+
+        printString &= InsertMap()
+
+        'filter out unused destinations
+        For I As Integer = 0 To tpSize - 1
+            If (teleportLocations(I).tpType <> 0) Then
+                TempDest.Add(teleportLocations(I))
+            End If
+        Next
+
+        'Sort new array of destinations using TpDest compareTo()
+        TempDest.Sort()
+
+        'format alongside map information
+
+        For Each Item As TpDest In TempDest
+
+            printString &= "//" & Item.name & vbNewLine
+            printString &= "setpos " & Item.origin & "; setang " & Item.angles & ";" & vbNewLine
+            If (Item.tpType = 1) Then
+                'Print stage format
+                printString &= "sm_setspawn " & Item.stOrBonusNum & ";" & vbNewLine
+            ElseIf (Item.tpType = 2) Then
+                'Print Bonus
+                printString &= "sm_setbspawn " & Item.stOrBonusNum & ";" & vbNewLine
+            End If
+
+        Next
+
+        SaveScript(printString)
 
     End Sub
 #End Region
